@@ -8,6 +8,7 @@ pub mod cmap;
 pub mod colr;
 pub mod cpal;
 pub mod cvar;
+pub mod cvt;
 pub mod eblc;
 pub mod head;
 pub mod hhea;
