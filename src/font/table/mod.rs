@@ -6,6 +6,7 @@ pub mod cff;
 pub mod cff2;
 pub mod cmap;
 pub mod colr;
+pub mod cpal;
 pub mod eblc;
 pub mod head;
 pub mod hhea;
