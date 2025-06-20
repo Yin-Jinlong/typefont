@@ -7,6 +7,7 @@ pub mod cff2;
 pub mod cmap;
 pub mod colr;
 pub mod cpal;
+pub mod cvar;
 pub mod eblc;
 pub mod head;
 pub mod hhea;
@@ -15,6 +16,7 @@ pub mod maxp;
 pub mod name;
 pub mod os2;
 pub mod post;
+mod var;
 
 pub trait Table {
     fn name() -> String
