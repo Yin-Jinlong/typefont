@@ -28,6 +28,7 @@ pub mod hvar;
 pub mod jstf;
 pub mod kern;
 pub mod loca;
+pub mod ltsh;
 pub mod maxp;
 pub mod name;
 pub mod os2;
