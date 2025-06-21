@@ -11,6 +11,7 @@ pub mod cvar;
 pub mod cvt;
 pub mod dsig;
 pub mod eblc;
+pub mod glyph;
 pub mod head;
 pub mod hhea;
 pub mod hmtx;

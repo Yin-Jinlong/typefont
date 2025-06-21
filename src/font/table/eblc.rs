@@ -1,4 +1,4 @@
-use super::cbdt::BigGlyphMetrics;
+use super::glyph::BigGlyphMetrics;
 use crate::font::table::Table;
 use crate::font::{Offset16, Offset32};
 use crate::impl_table;
