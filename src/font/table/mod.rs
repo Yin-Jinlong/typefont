@@ -32,6 +32,7 @@ pub mod ltsh;
 pub mod math;
 pub mod maxp;
 pub mod merg;
+pub mod meta;
 pub mod name;
 pub mod os2;
 pub mod post;
