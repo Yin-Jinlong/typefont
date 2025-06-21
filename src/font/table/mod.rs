@@ -41,6 +41,7 @@ pub mod post;
 pub mod prep;
 pub mod sbix;
 pub mod stat;
+pub mod svg;
 pub mod var;
 
 pub trait Table {
