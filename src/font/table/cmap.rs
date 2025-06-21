@@ -1,7 +1,7 @@
 use super::Table;
 use crate::font::Offset32;
 use crate::impl_table;
-use crate::types::U24;
+use bit_struct::u24;
 
 /// # cmap — 字符到字形索引映射表
 /// 2024/05/29
@@ -655,7 +655,7 @@ pub struct UnicodeVariationSequences {
 ///
 ///
 pub struct VariationSelector {
-    var_selector: U24,
+    var_selector: u24,
     /// 从`格式 14` 子表的开头到默认 UVS 表的偏移量。可能是 0。
     default_uvs_offset: Offset32,
     /// 从`格式 14` 子表的开头到非默认 UVS 表的偏移量。可能是 0。
@@ -688,7 +688,7 @@ pub struct DefaultUVSTable {
 ///
 pub struct UnicodeRange {
     /// 此范围内的第一个值
-    start_unicode_value: U24,
+    start_unicode_value: u24,
     /// 此范围内的附加值数
     additional_count: u8,
 }
@@ -711,7 +711,7 @@ pub struct NonDefaultUVSTable {
 /// 则情况可能并非如此。
 pub struct UVSMapping {
     /// UVS 的基本 `Unicode` 值
-    unicode_value: U24,
+    unicode_value: u24,
     /// UVS 的字形 `ID`
     glyph_id: u16,
 }

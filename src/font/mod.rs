@@ -1,4 +1,4 @@
-use crate::types::U24;
+use bit_struct::u24;
 
 pub mod open_type;
 pub mod table;
@@ -45,7 +45,7 @@ type Tag = [u8; 4];
 
 type Offset8 = u8;
 type Offset16 = u16;
-type Offset24 = U24;
+type Offset24 = u24;
 type Offset32 = u32;
 
 // u16.u16
