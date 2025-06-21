@@ -43,6 +43,7 @@ pub mod sbix;
 pub mod stat;
 pub mod svg;
 pub mod var;
+pub mod vdmx;
 
 pub trait Table {
     fn name() -> String
