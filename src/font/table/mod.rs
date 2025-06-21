@@ -40,6 +40,7 @@ pub mod pclt;
 pub mod post;
 pub mod prep;
 pub mod sbix;
+pub mod stat;
 pub mod var;
 
 pub trait Table {
