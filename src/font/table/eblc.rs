@@ -1,5 +1,6 @@
+use super::bm::BitmapSize;
 use super::glyph::BigGlyphMetrics;
-use crate::font::table::Table;
+use super::Table;
 use crate::font::{Offset16, Offset32};
 use crate::impl_table;
 
@@ -13,21 +14,6 @@ pub struct Eblc {
 }
 
 impl_table!(Eblc, "EBLC");
-
-pub struct BitmapSize {
-    index_subtable_list_offset: Offset32,
-    index_subtable_list_size: u32,
-    number_of_index_subtables: u32,
-    color_ref: u32,
-    hori: SbitLineMetrics,
-    vert: SbitLineMetrics,
-    start_glyph_index: u16,
-    end_glyph_index: u16,
-    ppem_x: u8,
-    ppem_y: u8,
-    bit_depth: u8,
-    flags: i8,
-}
 
 pub struct SbitLineMetrics {
     ascender: i8,

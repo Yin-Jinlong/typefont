@@ -1,4 +1,4 @@
-use super::eblc::BitmapSize;
+use super::bm::BitmapSize;
 use crate::font::table::Table;
 use crate::impl_table;
 

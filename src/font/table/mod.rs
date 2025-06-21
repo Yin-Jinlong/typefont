@@ -1,5 +1,6 @@
 pub mod avar;
 pub mod base;
+pub mod bm;
 pub mod cbdt;
 pub mod cblc;
 pub mod cff;
@@ -12,6 +13,7 @@ pub mod cvt;
 pub mod dsig;
 pub mod ebdt;
 pub mod eblc;
+pub mod ebsc;
 pub mod glyph;
 pub mod head;
 pub mod hhea;
