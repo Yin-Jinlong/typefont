@@ -20,6 +20,8 @@ pub mod gasp;
 pub mod gdef;
 pub mod glyf;
 pub mod glyph;
+pub mod gpos;
+pub mod gsub;
 pub mod hdmx;
 pub mod head;
 pub mod hhea;
