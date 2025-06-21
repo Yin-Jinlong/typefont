@@ -14,6 +14,7 @@ pub mod dsig;
 pub mod ebdt;
 pub mod eblc;
 pub mod ebsc;
+pub mod fpgm;
 pub mod glyph;
 pub mod head;
 pub mod hhea;
