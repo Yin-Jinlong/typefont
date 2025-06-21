@@ -45,6 +45,7 @@ pub mod svg;
 pub mod var;
 pub mod vdmx;
 pub mod vhea;
+pub mod vmtx;
 
 pub trait Table {
     fn name() -> String
