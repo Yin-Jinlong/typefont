@@ -10,6 +10,7 @@ pub mod cpal;
 pub mod cvar;
 pub mod cvt;
 pub mod dsig;
+pub mod ebdt;
 pub mod eblc;
 pub mod glyph;
 pub mod head;
