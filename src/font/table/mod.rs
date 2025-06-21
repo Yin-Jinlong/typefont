@@ -18,6 +18,7 @@ pub mod fpgm;
 pub mod fvar;
 pub mod gasp;
 pub mod gdef;
+pub mod glyf;
 pub mod glyph;
 pub mod head;
 pub mod hhea;
