@@ -38,6 +38,7 @@ pub mod name;
 pub mod os2;
 pub mod pclt;
 pub mod post;
+pub mod prep;
 pub mod var;
 
 pub trait Table {
