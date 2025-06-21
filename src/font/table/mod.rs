@@ -26,6 +26,7 @@ pub mod hhea;
 pub mod hmtx;
 pub mod hvar;
 pub mod jstf;
+pub mod kern;
 pub mod maxp;
 pub mod name;
 pub mod os2;
