@@ -24,7 +24,7 @@ macro_rules! read_fn {
     };
 }
 
-type Result<R> = std::result::Result<R, IOError>;
+pub type Result<R> = std::result::Result<R, IOError>;
 
 pub trait Reader {
     /// 当前位置，相对于数据开头
