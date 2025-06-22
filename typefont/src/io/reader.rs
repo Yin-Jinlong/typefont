@@ -20,6 +20,13 @@ macro_rules! read_fn {
                 };
                 Ok($t::from_be_bytes(bytes))
             }
+            fn [<read_ $t _list>](&mut self, count: usize) -> Result<Vec<$t>> {
+                let mut list=Vec::with_capacity(count);
+                for _ in 0..count {
+                    list.push(self.[<read_ $t>]()?);
+                }
+                Ok(list)
+            }
         }
         )*
     };
