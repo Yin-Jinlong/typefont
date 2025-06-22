@@ -52,7 +52,6 @@ pub struct TableDirectory {
     /// `(numTables * 16) - searchRange`
     range_shift: u16,
     table_records: Vec<TableRecord>,
-    tables: Vec<Table>,
 }
 
 /// # OpenType字体文件
@@ -144,6 +143,7 @@ pub struct TableDirectory {
 ///
 pub struct OpenType {
     table_directory: TableDirectory,
+    tables: Vec<Table>,
 }
 
 impl ReadFrom<Box<dyn Reader>, TableDirectory> for TableDirectory {
@@ -164,7 +164,6 @@ impl ReadFrom<Box<dyn Reader>, TableDirectory> for TableDirectory {
             entry_selector,
             range_shift,
             table_records: vec![],
-            tables: vec![],
         })
     }
 }
@@ -172,7 +171,11 @@ impl ReadFrom<Box<dyn Reader>, TableDirectory> for TableDirectory {
 impl ReadFrom<Box<dyn Reader>, OpenType> for OpenType {
     fn read_from(reader: &mut Box<dyn Reader>) -> Result<Self, IOError> {
         let table_directory = TableDirectory::read_from(reader)?;
-        Ok(Self { table_directory })
+        // TODO
+        Ok(Self {
+            table_directory,
+            tables: vec![],
+        })
     }
 }
 
