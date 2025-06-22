@@ -57,6 +57,12 @@ impl Write<&[u8]> for dyn Writer {
     }
 }
 
+impl Write<String> for dyn Writer {
+    fn write(&mut self, v: String) -> Result {
+        self.write(v.as_bytes())
+    }
+}
+
 impl Write<bool> for dyn Writer {
     fn write(&mut self, v: bool) -> Result {
         let bs = [if v { 1 } else { 0 }];
