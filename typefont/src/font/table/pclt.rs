@@ -1,5 +1,4 @@
-use super::Table;
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct PCLT {
     major_version: u16,
@@ -21,4 +20,4 @@ pub struct PCLT {
     reserved: u8,
 }
 
-impl_table!(PCLT, "PCLT");
+impl_named!(PCLT, "PCLT");

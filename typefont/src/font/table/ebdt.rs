@@ -1,5 +1,4 @@
-use crate::font::table::Table;
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct EBDT {
     /// 2
@@ -8,7 +7,7 @@ pub struct EBDT {
     minor_version: u16,
 }
 
-impl_table!(EBDT, "EBDT");
+impl_named!(EBDT, "EBDT");
 
 pub struct EbdtComponent {
     glyph_id: u16,

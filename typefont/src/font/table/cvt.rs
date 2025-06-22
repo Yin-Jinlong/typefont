@@ -1,9 +1,8 @@
-use crate::font::table::Table;
 use crate::font::FWord;
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct Cvt {
     data: Vec<FWord>,
 }
 
-impl_table!(Cvt, "cvt");
+impl_named!(Cvt, "cvt");

@@ -1,8 +1,7 @@
-use super::Table;
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct Fpgm {
     data: Vec<u8>,
 }
 
-impl_table!(Fpgm, "fpgm");
+impl_named!(Fpgm, "fpgm");

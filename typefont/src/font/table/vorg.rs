@@ -1,5 +1,4 @@
-use super::Table;
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct VORG {
     /// 1
@@ -11,7 +10,7 @@ pub struct VORG {
     vert_origin_ymetrics: Vec<VertOriginYMetrics>,
 }
 
-impl_table!(VORG, "VORG");
+impl_named!(VORG, "VORG");
 
 pub struct VertOriginYMetrics {
     glyph_index: u16,

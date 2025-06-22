@@ -1,13 +1,12 @@
 use super::super::Offset16;
-use super::Table;
-use crate::impl_table;
+use crate::impl_named;
 
 pub enum Name {
     V0(NameV0),
     V1(NameV1),
 }
 
-impl_table!(Name, "name");
+impl_named!(Name, "name");
 
 pub struct NameV0 {
     version: u16,

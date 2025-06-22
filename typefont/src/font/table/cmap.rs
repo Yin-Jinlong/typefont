@@ -1,6 +1,5 @@
-use super::Table;
 use crate::font::Offset32;
-use crate::impl_table;
+use crate::impl_named;
 use bit_struct::u24;
 
 /// # cmap — 字符到字形索引映射表
@@ -42,7 +41,7 @@ pub struct Cmap {
     encoding_records: Vec<EncodingRecord>,
 }
 
-impl_table!(Cmap, "cmap");
+impl_named!(Cmap, "cmap");
 
 ///
 /// 编码记录中的平台ID和平台特定的编码ID用于指定特定的字符编码。

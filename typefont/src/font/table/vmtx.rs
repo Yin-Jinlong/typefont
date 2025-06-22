@@ -1,8 +1,7 @@
-use super::Table;
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct Vmtx {
     // TODO
 }
 
-impl_table!(Vmtx, "vmtx");
+impl_named!(Vmtx, "vmtx");

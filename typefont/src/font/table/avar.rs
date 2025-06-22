@@ -1,5 +1,4 @@
-use crate::font::table::Table;
-use crate::impl_table;
+use crate::impl_named;
 use crate::types::F2D14;
 
 pub struct Avar {
@@ -20,4 +19,4 @@ pub struct AxisValueMap {
     to_coordinate: F2D14,
 }
 
-impl_table!(Avar, "avar");
+impl_named!(Avar, "avar");

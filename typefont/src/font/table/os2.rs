@@ -1,6 +1,5 @@
 use super::super::{FWord, Tag, UFWord};
-use super::Table;
-use crate::impl_table;
+use crate::impl_named;
 
 pub enum Os2 {
     V5(Os2V5),
@@ -11,7 +10,7 @@ pub enum Os2 {
     V0(Os2V0),
 }
 
-impl_table!(Os2, "OS/2");
+impl_named!(Os2, "OS/2");
 
 pub struct Os2V5 {
     // 继承

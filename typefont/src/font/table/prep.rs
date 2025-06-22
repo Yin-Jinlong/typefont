@@ -1,8 +1,7 @@
-use super::Table;
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct Prep {
     data: Vec<u8>,
 }
 
-impl_table!(Prep, "prep");
+impl_named!(Prep, "prep");

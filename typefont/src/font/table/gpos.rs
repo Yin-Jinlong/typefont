@@ -1,8 +1,7 @@
-use super::Table;
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct GPOS {
     // TODO
 }
 
-impl_table!(GPOS, "GPOS");
+impl_named!(GPOS, "GPOS");

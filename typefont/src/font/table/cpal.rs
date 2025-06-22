@@ -1,13 +1,12 @@
-use crate::font::table::Table;
 use crate::font::Offset32;
-use crate::impl_table;
+use crate::impl_named;
 
 pub enum CPAL {
     V0(CPAL0),
     V1(CPAL1),
 }
 
-impl_table!(CPAL, "CPAL");
+impl_named!(CPAL, "CPAL");
 
 pub struct CPAL0 {
     version: u16,

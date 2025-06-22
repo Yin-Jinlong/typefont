@@ -1,12 +1,11 @@
 use super::bm::BitmapSize;
-use crate::font::table::Table;
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct CBLC {
     header: CblcHeader,
 }
 
-impl_table!(CBLC, "CBLC");
+impl_named!(CBLC, "CBLC");
 
 pub struct CblcHeader {
     major_version: u16,

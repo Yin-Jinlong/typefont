@@ -51,16 +51,67 @@ pub mod vmtx;
 pub mod vorg;
 pub mod vvar;
 
-pub trait Table {
-    fn name() -> String
-    where
-        Self: Sized;
+pub trait Named {
+    fn name() -> String;
+}
+
+pub enum Table {
+    Avar(avar::Avar),
+    BASE(base::BASE),
+    CBDT(cbdt::CBDT),
+    CBLC(cblc::CBLC),
+    CFF(cff::CFF),
+    CFF2(cff2::CFF2),
+    Cmap(cmap::Cmap),
+    COLR(colr::COLR),
+    CPAL(cpal::CPAL),
+    Cvar(cvar::Cvar),
+    Cvt(cvt::Cvt),
+    DSIG(dsig::DSIG),
+    EBDT(ebdt::EBDT),
+    Eblc(eblc::Eblc),
+    EBSC(ebsc::EBSC),
+    Fpgm(fpgm::Fpgm),
+    Fvar(fvar::Fvar),
+    Gasp(gasp::Gasp),
+    GDEF(gdef::GDEF),
+    Glyf(glyf::Glyf),
+    GPOS(gpos::GPOS),
+    GSUB(gsub::GSUB),
+    Hdmx(hdmx::Hdmx),
+    Head(head::Head),
+    Hhea(hhea::Hhea),
+    Hmtx(hmtx::Hmtx),
+    HVAR(hvar::HVAR),
+    JSTF(jstf::JSTF),
+    Kern(kern::Kern),
+    Loca(loca::Loca),
+    LTSH(ltsh::LTSH),
+    MATH(math::MATH),
+    Maxp(maxp::Maxp),
+    MERG(merg::MERG),
+    Meta(meta::Meta),
+    MVAR(mvar::MVAR),
+    Name(name::Name),
+    OS2(os2::Os2),
+    PCLT(pclt::PCLT),
+    Post(post::Post),
+    Prep(prep::Prep),
+    Sbix(sbix::Sbix),
+    STAT(stat::STAT),
+    SVG(svg::SVG),
+    VDMX(vdmx::VDMX),
+    Vhea(vhea::Vhea),
+    Vmtx(vmtx::Vmtx),
+    VORG(vorg::VORG),
+    VVAR(vvar::VVAR),
 }
 
 #[macro_export]
-macro_rules! impl_table {
+macro_rules! impl_named {
     ($table:ty,$name:literal) => {
-        impl Table for $table {
+        use super::Named;
+        impl Named for $table {
             fn name() -> String {
                 String::from($name)
             }

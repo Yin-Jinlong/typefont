@@ -1,8 +1,7 @@
-use super::Table;
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct GSUB {
     // TODO
 }
 
-impl_table!(GSUB, "GSUB");
+impl_named!(GSUB, "GSUB");

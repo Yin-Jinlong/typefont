@@ -1,6 +1,5 @@
-use super::Table;
 use crate::font::{Fixed, Offset16, Offset32, Tag};
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct STAT {
     header: STATHeader,
@@ -21,7 +20,7 @@ pub struct STATHeader {
     elided_fallback_name_id: u16,
 }
 
-impl_table!(STAT, "STAT");
+impl_named!(STAT, "STAT");
 
 pub struct AxisRecord {
     axis_tag: Tag,

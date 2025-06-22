@@ -1,13 +1,12 @@
 use super::super::Version16Dot16;
-use super::Table;
-use crate::impl_table;
+use crate::impl_named;
 
 pub enum Maxp {
     V0_5(MaxpV0_5),
     V1_0(MaxpV1_0),
 }
 
-impl_table!(Maxp, "maxp");
+impl_named!(Maxp, "maxp");
 
 pub struct MaxpV0_5 {
     version: Version16Dot16,

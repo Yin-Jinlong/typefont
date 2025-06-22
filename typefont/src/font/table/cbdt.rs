@@ -1,5 +1,4 @@
-use crate::font::table::Table;
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct CBDT {
     header: CbdtHeader,
@@ -11,7 +10,7 @@ pub struct CBDT {
     bmp_data: Vec<u8>,
 }
 
-impl_table!(CBDT, "CBDT");
+impl_named!(CBDT, "CBDT");
 
 pub struct CbdtHeader {
     /// 3

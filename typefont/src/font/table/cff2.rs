@@ -1,11 +1,10 @@
-use crate::font::table::Table;
-use crate::impl_table;
+use crate::impl_named;
 
 // TODO
 
 pub struct CFF2 {}
 
-impl_table!(CFF2, "CFF2");
+impl_named!(CFF2, "CFF2");
 
 pub struct CFF2Header {
     /// 2

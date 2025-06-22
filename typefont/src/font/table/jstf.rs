@@ -1,6 +1,5 @@
-use crate::font::table::Table;
 use crate::font::{Offset16, Tag};
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct JSTF {
     header: JSTFHeader,
@@ -13,7 +12,7 @@ pub struct JSTFHeader {
     jstf_script_records: Vec<JstfScriptRecord>,
 }
 
-impl_table!(JSTF, "JSTF");
+impl_named!(JSTF, "JSTF");
 
 pub struct JstfScriptRecord {
     jstf_script_tag: Tag,
@@ -60,7 +59,7 @@ pub struct JstfModList {
     lookup_indices: Vec<u16>,
 }
 
-pub struct JstfMax{
+pub struct JstfMax {
     lookup_count: u16,
     lookup_offsets: Vec<Offset16>,
 }

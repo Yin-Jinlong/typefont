@@ -1,5 +1,4 @@
-use super::Table;
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct Hdmx {}
 
@@ -11,7 +10,7 @@ pub struct HdmxHeader {
     records: Vec<DeviceRecord>,
 }
 
-impl_table!(Hdmx, "hdmx");
+impl_named!(Hdmx, "hdmx");
 
 pub struct DeviceRecord {
     pixel_size: u8,

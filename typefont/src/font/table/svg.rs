@@ -1,6 +1,5 @@
-use super::Table;
 use crate::font::Offset32;
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct SVG {
     header: SVGHeader,
@@ -15,7 +14,7 @@ pub struct SVGHeader {
     reserved: u32,
 }
 
-impl_table!(SVG, "SVG");
+impl_named!(SVG, "SVG");
 
 pub struct SVGDocumentList {
     num_entries: u16,

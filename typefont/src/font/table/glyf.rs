@@ -1,5 +1,4 @@
-use super::Table;
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct Glyf {
     header: GlyfHeader,
@@ -14,7 +13,7 @@ pub struct GlyfHeader {
     y_max: i16,
 }
 
-impl_table!(Glyf, "glyf");
+impl_named!(Glyf, "glyf");
 
 pub enum GlyfGlyphDescription {
     Format1(SimpleGlyph),

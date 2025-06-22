@@ -1,6 +1,5 @@
 use super::super::{FWord, UFWord};
-use super::Table;
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct Hmtx {
     /// h_metrics\[number_of_h_metrics]
@@ -9,7 +8,7 @@ pub struct Hmtx {
     left_side_bearings: FWord,
 }
 
-impl_table!(Hmtx, "hmtx");
+impl_named!(Hmtx, "hmtx");
 
 pub struct LongHorMetric {
     advance_width: UFWord,

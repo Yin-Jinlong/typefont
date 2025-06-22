@@ -52,7 +52,7 @@ pub struct TableDirectory {
     /// `(numTables * 16) - searchRange`
     range_shift: u16,
     table_records: Vec<TableRecord>,
-    tables: Vec<Box<dyn Table>>,
+    tables: Vec<Table>,
 }
 
 /// # OpenType字体文件

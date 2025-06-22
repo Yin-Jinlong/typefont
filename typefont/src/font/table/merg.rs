@@ -1,6 +1,5 @@
-use super::Table;
 use crate::font::Offset16;
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct MERG {
     header: MERGHeader,
@@ -15,7 +14,7 @@ pub struct MERGHeader {
     offset_to_class_def_offsets: Offset16,
 }
 
-impl_table!(MERG, "MERG");
+impl_named!(MERG, "MERG");
 
 pub struct MergeEntry {
     merge_entry_rows: Vec<MergeEntryRow>,

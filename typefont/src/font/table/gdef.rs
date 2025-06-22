@@ -1,6 +1,5 @@
-use super::Table;
 use crate::font::{Offset16, Offset32};
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct GDEF {
     header: GDEFHeader,
@@ -12,7 +11,7 @@ pub enum GDEFHeader {
     V1_3(GDEFHeader1_3),
 }
 
-impl_table!(GDEF, "GDEF");
+impl_named!(GDEF, "GDEF");
 
 pub struct GDEFHeader1_0 {
     /// 1

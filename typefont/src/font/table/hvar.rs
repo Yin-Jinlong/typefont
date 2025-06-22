@@ -1,6 +1,5 @@
-use super::Table;
 use crate::font::Offset32;
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct HVAR {
     major_version: u16,
@@ -11,4 +10,4 @@ pub struct HVAR {
     rsb_mapping_offset: Offset32,
 }
 
-impl_table!(HVAR, "HVAR");
+impl_named!(HVAR, "HVAR");

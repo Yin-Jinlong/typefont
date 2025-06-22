@@ -1,6 +1,5 @@
-use super::Table;
 use crate::font::{FWord, Offset16, UFWord};
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct MATH {}
 
@@ -14,7 +13,7 @@ pub struct MATHeader {
     math_variants_offset: u16,
 }
 
-impl_table!(MATH, "MATH");
+impl_named!(MATH, "MATH");
 
 pub struct MathValueRecord {
     value: FWord,

@@ -1,5 +1,4 @@
-use super::Table;
-use crate::impl_table;
+use crate::impl_named;
 
 pub struct Gasp {
     head: GaspHeader,
@@ -12,7 +11,7 @@ pub struct GaspHeader {
     gasp_ranges: Vec<GaspRange>,
 }
 
-impl_table!(Gasp, "gasp");
+impl_named!(Gasp, "gasp");
 
 pub struct GaspRange {
     range_max_ppem: u16,
