@@ -3,6 +3,9 @@ name = "typefont"
 version = "0.1.0"
 edition = "2024"
 
+[features]
+writer = []
+
 [dependencies]
 bit-struct = "0.3.2"
 paste = "1.0.15"
