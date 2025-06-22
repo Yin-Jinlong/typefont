@@ -61,7 +61,8 @@ impl Reader for ArrayReader {
             return Err(IOError::UnexpectedEof);
         }
         let read_len = min(len, self.remaining());
+        let r = self.data[self.pos..self.pos + read_len].to_vec();
         self.pos += read_len;
-        Ok(self.data[self.pos..read_len].to_vec())
+        Ok(r)
     }
 }
