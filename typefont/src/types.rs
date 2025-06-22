@@ -187,6 +187,11 @@ impl Tag {
         [bs[0], bs[1], bs[2], bs[3]]
     }
 
+    fn to_u32(&self) -> u32 {
+        let bs = self.to_bytes();
+        u32::from_be_bytes(bs)
+    }
+
     fn to_string(&self) -> String {
         self.0.clone()
     }
