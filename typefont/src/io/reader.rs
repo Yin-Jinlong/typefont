@@ -1,3 +1,4 @@
+use crate::io::array_reader::ArrayReader;
 use crate::io::error::IOError;
 use bit_struct::{i24, i40, i48, i56, u24, u40, u48, u56};
 use paste::paste;
@@ -102,6 +103,12 @@ pub trait Reader {
         } else {
             Ok(res)
         }
+    }
+
+    /// 读取指定长度的子数据
+    fn read_sub(&mut self, len: usize) -> Result<Box<dyn Reader>> {
+        let data = self.read_bytes_expected(len)?;
+        Ok(Box::new(ArrayReader::from(data)))
     }
 }
 
