@@ -1,0 +1,11 @@
+[package]
+name = "tyfont-tool"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+
+[dependencies.typefont]
+path = "../typefont"
+version = "0.1.0"
+features = ["writer"]
