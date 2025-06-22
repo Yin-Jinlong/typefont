@@ -60,6 +60,7 @@ impl Reader for FileReader {
 
     fn read_bytes(&mut self, len: usize) -> crate::io::reader::Result<Vec<u8>> {
         let mut buf = Vec::with_capacity(len);
+        buf.resize(len, 0);
         match self.file.read(buf.as_mut_slice()) {
             Ok(_) => {
                 self.pos += len;
