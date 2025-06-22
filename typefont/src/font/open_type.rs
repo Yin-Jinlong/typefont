@@ -1,6 +1,8 @@
 use super::table_record::TableRecord;
 use crate::font::io::ReadFrom;
-use crate::font::table::Table;
+use crate::font::table::base::BASE;
+use crate::font::table::{Table, WithTag};
+use crate::io::array_reader::ArrayReader;
 use crate::io::error::IOError;
 use crate::io::file_reader::FileReader;
 use crate::io::reader::{Reader, ReaderBoxed};
@@ -142,8 +144,8 @@ pub struct TableDirectory {
 /// 并且可以结合可变字体和非可变字体。
 ///
 pub struct OpenType {
-    table_directory: TableDirectory,
-    tables: Vec<Table>,
+    pub table_directory: TableDirectory,
+    pub tables: Vec<Table>,
 }
 
 impl ReadFrom<ReaderBoxed> for TableDirectory {
@@ -179,10 +181,22 @@ impl ReadFrom<ReaderBoxed> for TableDirectory {
 impl ReadFrom<ReaderBoxed> for OpenType {
     fn read_from(reader: &mut ReaderBoxed) -> Result<Self, IOError> {
         let table_directory = TableDirectory::read_from(reader)?;
-        // TODO
+        let mut tables: Vec<Table> = vec![];
+
+        for record in &table_directory.table_records {
+            reader.seek(record.offset as usize)?;
+            let data = reader.read_bytes(record.length as usize)?;
+            let mut sub_reader: ReaderBoxed = Box::new(ArrayReader::from(data));
+            match record.table_tag.to_u32() {
+                BASE::TAG_U32 => tables.push(Table::BASE(BASE::read_from(&mut sub_reader)?)),
+
+                _ => {}
+            }
+        }
+
         Ok(Self {
             table_directory,
-            tables: vec![],
+            tables,
         })
     }
 }

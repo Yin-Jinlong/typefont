@@ -29,13 +29,13 @@ use crate::io::reader::ReaderBoxed;
 ///
 pub struct TableRecord {
     /// 表标识
-    table_tag: Tag,
+    pub table_tag: Tag,
     /// 此表的校验和
-    checksum: u32,
+    pub checksum: u32,
     /// 字体文件开头的偏移量。
-    offset: Offset32,
+    pub offset: Offset32,
     /// 此表的长度。
-    length: u32,
+    pub length: u32,
 }
 
 /// `head`表格在校验和计算中是一个特例，
