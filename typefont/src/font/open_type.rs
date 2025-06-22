@@ -150,7 +150,10 @@ impl ReadFrom<ReaderBoxed> for TableDirectory {
     fn read_from(reader: &mut ReaderBoxed) -> Result<Self, IOError> {
         let sfnt = reader.read_u32()?;
         if sfnt != SFNT_TTF && sfnt != SFNT_OTF {
-            return Err(IOError::UnableCast);
+            return Err(IOError::BadFormat(format!(
+                "Expected 0x00010000 or 0x4F54544F , found {:X}",
+                sfnt
+            )));
         }
         let num_tables = reader.read_u16()?;
         let search_range = reader.read_u16()?;
