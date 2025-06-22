@@ -1,3 +1,7 @@
+use crate::font::Tag;
+use crate::font::io::ReadFrom;
+use crate::io::reader::ReaderBoxed;
+
 pub mod avar;
 pub mod base;
 pub mod bm;
@@ -52,7 +56,7 @@ pub mod vorg;
 pub mod vvar;
 
 pub trait WithTag {
-    const TAG: crate::font::Tag;
+    const TAG: Tag;
     const TAG_U32: u32;
 }
 
@@ -106,6 +110,22 @@ pub enum Table {
     Vmtx(vmtx::Vmtx),
     VORG(vorg::VORG),
     VVAR(vvar::VVAR),
+}
+
+impl Table {
+    pub fn read_from(
+        tag: &Tag,
+        reader: &mut ReaderBoxed,
+    ) -> Result<Self, crate::io::error::IOError> {
+        match tag.to_u32() {
+            base::BASE::TAG_U32 => Ok(Table::BASE(base::BASE::read_from(reader)?)),
+
+            _ => Err(crate::io::error::IOError::UnableOperate(format!(
+                "Unknown or unsupported table tag: {}",
+                tag.to_string()
+            ))),
+        }
+    }
 }
 
 #[macro_export]

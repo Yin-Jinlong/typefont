@@ -1,11 +1,10 @@
 use super::table_record::TableRecord;
 use crate::font::io::ReadFrom;
-use crate::font::table::base::BASE;
-use crate::font::table::{Table, WithTag};
+use crate::font::table::Table;
 use crate::io::array_reader::ArrayReader;
 use crate::io::error::IOError;
 use crate::io::file_reader::FileReader;
-use crate::io::reader::{Reader, ReaderBoxed};
+use crate::io::reader::ReaderBoxed;
 
 const SFNT_TTF: u32 = 0x00010000;
 const SFNT_OTF: u32 = 0x4F54544F;
@@ -181,16 +180,15 @@ impl ReadFrom<ReaderBoxed> for TableDirectory {
 impl ReadFrom<ReaderBoxed> for OpenType {
     fn read_from(reader: &mut ReaderBoxed) -> Result<Self, IOError> {
         let table_directory = TableDirectory::read_from(reader)?;
-        let mut tables: Vec<Table> = vec![];
+        let mut tables: Vec<Table> = Vec::with_capacity(table_directory.num_tables as usize);
 
         for record in &table_directory.table_records {
             reader.seek(record.offset as usize)?;
             let data = reader.read_bytes(record.length as usize)?;
             let mut sub_reader: ReaderBoxed = Box::new(ArrayReader::from(data));
-            match record.table_tag.to_u32() {
-                BASE::TAG_U32 => tables.push(Table::BASE(BASE::read_from(&mut sub_reader)?)),
-
-                _ => {}
+            match Table::read_from(&record.table_tag, &mut sub_reader) {
+                Ok(t) => tables.push(t),
+                Err(_) => {}
             }
         }
 
