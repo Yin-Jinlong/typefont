@@ -1,4 +1,5 @@
 use bit_struct::u24;
+use crate::types::Tag as TagStruct;
 
 pub mod io;
 pub mod open_type;
@@ -42,7 +43,7 @@ type LongDataTime = i64;
 /// 然而，从形式上讲，该值是一个字节数组。当重新解释为字符时，标签值区分大小写。
 /// 它必须包含一到四个非空格字符，并以尾随空格（字节值 `0x20`）填充。
 /// 不允许空格字符后跟随非空格字符。
-type Tag = [u8; 4];
+type Tag = TagStruct;
 
 type Offset8 = u8;
 type Offset16 = u16;
