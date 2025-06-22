@@ -23,7 +23,7 @@ macro_rules! write_fn {
     };
 }
 
-type Result = std::result::Result<usize, IOError>;
+pub type Result = std::result::Result<usize, IOError>;
 
 pub trait Write<T: ?Sized> {
     fn write(&mut self, v: T) -> Result;
