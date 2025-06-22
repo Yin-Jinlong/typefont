@@ -3,5 +3,5 @@ pub enum IOError {
     NoEnoughData,
     UnexpectedEof,
     UnableCast,
-    UnableOperate,
+    UnableOperate(String),
 }
