@@ -1,5 +1,6 @@
 use bit_struct::u24;
 
+pub mod io;
 pub mod open_type;
 pub mod table;
 pub mod table_record;

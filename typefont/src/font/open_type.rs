@@ -1,5 +1,12 @@
 use super::table_record::TableRecord;
+use crate::font::io::ReadFrom;
 use crate::font::table::Table;
+use crate::io::error::IOError;
+use crate::io::file_reader::FileReader;
+use crate::io::reader::Reader;
+
+const SFNT_TTF: u32 = 0x00010000;
+const SFNT_OTF: u32 = 0x4F54544F;
 
 /// # 表目录
 ///
@@ -137,4 +144,39 @@ pub struct TableDirectory {
 ///
 pub struct OpenType {
     table_directory: TableDirectory,
+}
+
+impl ReadFrom<Box<dyn Reader>, TableDirectory> for TableDirectory {
+    fn read_from(reader: &mut Box<dyn Reader>) -> Result<TableDirectory, IOError> {
+        let sfnt = reader.read_u32()?;
+        if sfnt != SFNT_TTF && sfnt != SFNT_OTF {
+            return Err(IOError::UnableCast);
+        }
+        let num_tables = reader.read_u16()?;
+        let search_range = reader.read_u16()?;
+        let entry_selector = reader.read_u16()?;
+        let range_shift = reader.read_u16()?;
+        // TODO
+        Ok(Self {
+            sfnt_version: sfnt,
+            num_tables,
+            search_range,
+            entry_selector,
+            range_shift,
+            table_records: vec![],
+            tables: vec![],
+        })
+    }
+}
+
+impl ReadFrom<Box<dyn Reader>, OpenType> for OpenType {
+    fn read_from(reader: &mut Box<dyn Reader>) -> Result<Self, IOError> {
+        let table_directory = TableDirectory::read_from(reader)?;
+        Ok(Self { table_directory })
+    }
+}
+
+pub fn read_font(path: &str) -> Result<OpenType, IOError> {
+    let mut reader: Box<dyn Reader> = Box::new(FileReader::open(path).unwrap());
+    OpenType::read_from(&mut reader)
 }
