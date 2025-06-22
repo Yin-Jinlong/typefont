@@ -60,16 +60,11 @@ pub trait Reader {
     }
 
     fn read_bool(&mut self) -> Result<bool> {
-        Ok(self.read_byte()? != 0)
+        Ok(self.read_u8()? != 0)
     }
 
-    fn read_i8(&mut self) -> Result<i8> {
-        Ok(self.read_byte()? as i8)
-    }
-    fn read_u8(&mut self) -> Result<u8> {
-        Ok(self.read_byte()?)
-    }
     read_fn!(
+        i8(1),
         i16(2),
         i24(3),
         i32(4),
@@ -78,6 +73,7 @@ pub trait Reader {
         i56(7),
         i64(8),
         i128(16),
+        u8(1),
         u16(2),
         u24(3),
         u32(4),
@@ -89,8 +85,6 @@ pub trait Reader {
         f32(4),
         f64(8)
     );
-
-    fn read_byte(&mut self) -> Result<u8>;
 
     /// 读取指定长度的数据
     ///
