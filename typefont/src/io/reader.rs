@@ -31,7 +31,9 @@ pub trait Reader {
     fn position(&self) -> usize;
 
     /// 剩余可读数据长度
-    fn remaining(&self) -> usize;
+    fn remaining(&self) -> usize {
+        self.size() - self.position()
+    }
 
     fn size(&self) -> usize;
 
