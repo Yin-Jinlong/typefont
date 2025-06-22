@@ -1,6 +1,7 @@
 use crate::io::writer::Writer;
 use std::fs::File;
 use std::io::Write;
+use std::path::Path;
 
 pub struct FileWriter {
     file: File,
@@ -8,7 +9,7 @@ pub struct FileWriter {
 }
 
 impl FileWriter {
-    pub fn open(path: &str) -> Result<FileWriter, std::io::Error> {
+    pub fn open<P: AsRef<Path>>(path: P) -> Result<FileWriter, std::io::Error> {
         let file = File::open(path)?;
         Ok(Self { file, pos: 0 })
     }

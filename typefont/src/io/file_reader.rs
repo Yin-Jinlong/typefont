@@ -2,6 +2,7 @@ use crate::io::reader::Reader;
 use std::cmp::min;
 use std::fs::File;
 use std::io::{Read, Seek, SeekFrom};
+use std::path::Path;
 
 pub struct FileReader {
     file: File,
@@ -11,7 +12,7 @@ pub struct FileReader {
 }
 
 impl FileReader {
-    pub fn open(path: &str) -> Result<FileReader, std::io::Error> {
+    pub fn open<P: AsRef<Path>>(path: P) -> Result<FileReader, std::io::Error> {
         let file = File::open(path)?;
         let metadata = file.metadata()?;
         Ok(Self {
