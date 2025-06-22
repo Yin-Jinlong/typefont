@@ -104,3 +104,5 @@ pub trait Reader {
         }
     }
 }
+
+pub type ReaderBoxed = Box<dyn Reader>;

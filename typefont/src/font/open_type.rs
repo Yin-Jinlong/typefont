@@ -3,7 +3,7 @@ use crate::font::io::ReadFrom;
 use crate::font::table::Table;
 use crate::io::error::IOError;
 use crate::io::file_reader::FileReader;
-use crate::io::reader::Reader;
+use crate::io::reader::{Reader, ReaderBoxed};
 
 const SFNT_TTF: u32 = 0x00010000;
 const SFNT_OTF: u32 = 0x4F54544F;
@@ -146,8 +146,8 @@ pub struct OpenType {
     tables: Vec<Table>,
 }
 
-impl ReadFrom<Box<dyn Reader>, TableDirectory> for TableDirectory {
-    fn read_from(reader: &mut Box<dyn Reader>) -> Result<TableDirectory, IOError> {
+impl ReadFrom<ReaderBoxed> for TableDirectory {
+    fn read_from(reader: &mut ReaderBoxed) -> Result<Self, IOError> {
         let sfnt = reader.read_u32()?;
         if sfnt != SFNT_TTF && sfnt != SFNT_OTF {
             return Err(IOError::UnableCast);
@@ -168,8 +168,8 @@ impl ReadFrom<Box<dyn Reader>, TableDirectory> for TableDirectory {
     }
 }
 
-impl ReadFrom<Box<dyn Reader>, OpenType> for OpenType {
-    fn read_from(reader: &mut Box<dyn Reader>) -> Result<Self, IOError> {
+impl ReadFrom<ReaderBoxed> for OpenType {
+    fn read_from(reader: &mut ReaderBoxed) -> Result<Self, IOError> {
         let table_directory = TableDirectory::read_from(reader)?;
         // TODO
         Ok(Self {
@@ -180,6 +180,11 @@ impl ReadFrom<Box<dyn Reader>, OpenType> for OpenType {
 }
 
 pub fn read_font(path: &str) -> Result<OpenType, IOError> {
-    let mut reader: Box<dyn Reader> = Box::new(FileReader::open(path).unwrap());
+    let mut reader: ReaderBoxed = Box::new(match FileReader::open(path) {
+        Ok(reader) => reader,
+        Err(e) => {
+            return Err(IOError::UnableOperate(e.to_string()));
+        }
+    });
     OpenType::read_from(&mut reader)
 }

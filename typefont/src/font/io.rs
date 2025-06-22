@@ -1,7 +1,7 @@
 use crate::io::error::IOError;
 
-pub trait ReadFrom<R, T> {
-    fn read_from(reader: &mut R) -> Result<T, IOError>;
+pub trait ReadFrom<R> {
+    fn read_from(reader: &mut R) -> Result<Self, IOError> where Self: Sized;
 }
 
 pub trait WriteTo<W> {
