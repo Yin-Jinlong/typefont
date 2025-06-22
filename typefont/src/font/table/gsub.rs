@@ -1,7 +1,7 @@
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct GSUB {
     // TODO
 }
 
-impl_named!(GSUB, "GSUB");
+impl_tag!(GSUB, "GSUB");

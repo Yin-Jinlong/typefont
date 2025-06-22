@@ -1,4 +1,4 @@
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct LTSH {
     version: u16,
@@ -6,4 +6,4 @@ pub struct LTSH {
     y_pixels: Vec<u8>,
 }
 
-impl_named!(LTSH, "LTSH");
+impl_tag!(LTSH, "LTSH");

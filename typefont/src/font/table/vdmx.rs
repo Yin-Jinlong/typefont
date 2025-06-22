@@ -1,5 +1,5 @@
 use crate::font::Offset16;
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct VDMX {
     /// 0 or 1
@@ -10,7 +10,7 @@ pub struct VDMX {
     vdmx_group_offsets: Vec<Offset16>,
 }
 
-impl_named!(VDMX, "VDMX");
+impl_tag!(VDMX, "VDMX");
 
 pub struct RatioRange {
     b_char_set: u8,

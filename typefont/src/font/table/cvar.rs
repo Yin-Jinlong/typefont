@@ -1,6 +1,6 @@
 use super::var::formats::TupleVariationHeader;
 use crate::font::Offset16;
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct Cvar {
     header: CvarHeader,
@@ -17,4 +17,4 @@ pub struct CvarHeader {
     tuple_variation_headers: Vec<TupleVariationHeader>,
 }
 
-impl_named!(Cvar, "cvar");
+impl_tag!(Cvar, "cvar");

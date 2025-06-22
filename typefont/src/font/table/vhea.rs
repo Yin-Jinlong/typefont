@@ -1,5 +1,5 @@
 use crate::font::{FWord, UFWord, Version16Dot16};
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct Vhea {
     header: VheaHeader,
@@ -58,4 +58,4 @@ pub struct VheaHeader1_1 {
     num_of_long_ver_metrics: u16,
 }
 
-impl_named!(Vhea, "vhea");
+impl_tag!(Vhea, "vhea");

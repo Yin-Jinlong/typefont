@@ -1,5 +1,5 @@
 use crate::font::{Offset16, Tag};
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct MVAR {
     major_version: u16,
@@ -11,7 +11,7 @@ pub struct MVAR {
     value_records: Vec<ValueRecord>,
 }
 
-impl_named!(MVAR, "MVAR");
+impl_tag!(MVAR, "MVAR");
 
 pub struct ValueRecord {
     value_tag: Tag,

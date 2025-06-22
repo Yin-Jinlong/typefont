@@ -1,5 +1,5 @@
 use super::super::{FWord, UFWord};
-use crate::impl_named;
+use crate::impl_tag;
 
 /// # 水平头表
 ///
@@ -64,4 +64,4 @@ pub struct Hhea {
     number_of_h_metrics: u16,
 }
 
-impl_named!(Hhea, "hhea");
+impl_tag!(Hhea, "hhea");

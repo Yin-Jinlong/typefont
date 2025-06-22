@@ -1,6 +1,6 @@
-use crate::impl_named;
+use crate::impl_tag;
 
 /// 保留
 pub struct CFF {}
 
-impl_named!(CFF, "CFF");
+impl_tag!(CFF, "CFF");

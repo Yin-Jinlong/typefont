@@ -1,4 +1,4 @@
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct Hdmx {}
 
@@ -10,7 +10,7 @@ pub struct HdmxHeader {
     records: Vec<DeviceRecord>,
 }
 
-impl_named!(Hdmx, "hdmx");
+impl_tag!(Hdmx, "hdmx");
 
 pub struct DeviceRecord {
     pixel_size: u8,

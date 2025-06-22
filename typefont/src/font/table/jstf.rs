@@ -1,5 +1,5 @@
 use crate::font::{Offset16, Tag};
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct JSTF {
     header: JSTFHeader,
@@ -12,7 +12,7 @@ pub struct JSTFHeader {
     jstf_script_records: Vec<JstfScriptRecord>,
 }
 
-impl_named!(JSTF, "JSTF");
+impl_tag!(JSTF, "JSTF");
 
 pub struct JstfScriptRecord {
     jstf_script_tag: Tag,

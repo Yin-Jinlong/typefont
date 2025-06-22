@@ -51,8 +51,9 @@ pub mod vmtx;
 pub mod vorg;
 pub mod vvar;
 
-pub trait Named {
-    fn name() -> String;
+pub trait WithTag {
+    const TAG: crate::font::Tag;
+    const TAG_U32: u32;
 }
 
 pub enum Table {
@@ -108,13 +109,13 @@ pub enum Table {
 }
 
 #[macro_export]
-macro_rules! impl_named {
+macro_rules! impl_tag {
     ($table:ty,$name:literal) => {
-        use super::Named;
-        impl Named for $table {
-            fn name() -> String {
-                String::from($name)
-            }
+        use super::WithTag;
+
+        impl WithTag for $table {
+            const TAG: crate::font::Tag = crate::font::Tag::from_raw_unchecked($name);
+            const TAG_U32: u32 = crate::font::Tag::tag_str_to_u32_unchecked($name);
         }
     };
 }

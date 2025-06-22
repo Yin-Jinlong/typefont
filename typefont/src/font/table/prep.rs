@@ -1,7 +1,7 @@
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct Prep {
     data: Vec<u8>,
 }
 
-impl_named!(Prep, "prep");
+impl_tag!(Prep, "prep");

@@ -1,5 +1,5 @@
 use super::bm::BitmapScale;
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct EBSC {
     major_version: u16,
@@ -8,4 +8,4 @@ pub struct EBSC {
     strikes: Vec<BitmapScale>,
 }
 
-impl_named!(EBSC, "EBSC");
+impl_tag!(EBSC, "EBSC");

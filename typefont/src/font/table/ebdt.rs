@@ -1,4 +1,4 @@
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct EBDT {
     /// 2
@@ -7,7 +7,7 @@ pub struct EBDT {
     minor_version: u16,
 }
 
-impl_named!(EBDT, "EBDT");
+impl_tag!(EBDT, "EBDT");
 
 pub struct EbdtComponent {
     glyph_id: u16,

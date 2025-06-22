@@ -1,5 +1,5 @@
 use crate::font::{FWord, Fixed, Offset24, Offset32, UFWord};
-use crate::impl_named;
+use crate::impl_tag;
 use crate::types::F2D14;
 use paste::paste;
 
@@ -8,7 +8,7 @@ pub enum COLR {
     V1(COLR1),
 }
 
-impl_named!(COLR, "COLR");
+impl_tag!(COLR, "COLR");
 
 pub struct COLR0 {
     version: u16,

@@ -1,6 +1,6 @@
 use super::super::{Fixed, Version16Dot16};
 use crate::font::FWord;
-use crate::impl_named;
+use crate::impl_tag;
 
 pub enum Post {
     V1(PostV1),
@@ -11,7 +11,7 @@ pub enum Post {
     V3(PostV3),
 }
 
-impl_named!(Post, "post");
+impl_tag!(Post, "post");
 
 pub struct PostHeader {
     version: Version16Dot16,

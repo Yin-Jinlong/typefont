@@ -179,21 +179,39 @@ impl From<f32> for F2D14 {
 
 num_op!(F2D14);
 
-pub struct Tag(String);
+pub struct Tag(char, char, char, char);
 
 impl Tag {
-    fn to_bytes(&self) -> [u8; 4] {
-        let bs = self.0.as_bytes();
-        [bs[0], bs[1], bs[2], bs[3]]
+    pub const fn from_raw_unchecked(value: &str) -> Self {
+        let mut res: [u8; 4] = [0, 0, 0, 0];
+        let str = value.as_bytes();
+        res.copy_from_slice(str);
+        Self(
+            res[0] as char,
+            res[1] as char,
+            res[2] as char,
+            res[3] as char,
+        )
     }
 
-    fn to_u32(&self) -> u32 {
+    pub const fn tag_str_to_u32_unchecked(value: &str) -> u32 {
+        let mut res: [u8; 4] = [0, 0, 0, 0];
+        let str = value.as_bytes();
+        res.copy_from_slice(str);
+        u32::from_be_bytes(res)
+    }
+
+    pub fn to_bytes(&self) -> [u8; 4] {
+        [self.0 as u8, self.1 as u8, self.2 as u8, self.3 as u8]
+    }
+
+    pub fn to_u32(&self) -> u32 {
         let bs = self.to_bytes();
         u32::from_be_bytes(bs)
     }
 
-    fn to_string(&self) -> String {
-        self.0.clone()
+    pub fn to_string(&self) -> String {
+        String::from_iter([self.0, self.1, self.2, self.3])
     }
 }
 
@@ -217,22 +235,12 @@ impl From<u32> for Tag {
 
 impl From<[u8; 4]> for Tag {
     fn from(value: [u8; 4]) -> Self {
-        Self(String::from_iter(value.iter().map(|&b| b as char)))
-    }
-}
-
-impl TryFrom<&str> for Tag {
-    type Error = ();
-
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
-        let mut str = String::from(value);
-        if str.len() > 4 {
-            return Err(());
-        }
-        while str.len() < 4 {
-            str.push(' ');
-        }
-        Ok(Self(str))
+        Self(
+            value[0] as char,
+            value[1] as char,
+            value[2] as char,
+            value[3] as char,
+        )
     }
 }
 

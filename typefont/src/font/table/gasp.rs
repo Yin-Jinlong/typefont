@@ -1,4 +1,4 @@
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct Gasp {
     head: GaspHeader,
@@ -11,7 +11,7 @@ pub struct GaspHeader {
     gasp_ranges: Vec<GaspRange>,
 }
 
-impl_named!(Gasp, "gasp");
+impl_tag!(Gasp, "gasp");
 
 pub struct GaspRange {
     range_max_ppem: u16,

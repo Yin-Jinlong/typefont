@@ -1,4 +1,4 @@
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct PCLT {
     major_version: u16,
@@ -20,4 +20,4 @@ pub struct PCLT {
     reserved: u8,
 }
 
-impl_named!(PCLT, "PCLT");
+impl_tag!(PCLT, "PCLT");

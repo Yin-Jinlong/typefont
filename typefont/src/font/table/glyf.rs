@@ -1,4 +1,4 @@
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct Glyf {
     header: GlyfHeader,
@@ -13,7 +13,7 @@ pub struct GlyfHeader {
     y_max: i16,
 }
 
-impl_named!(Glyf, "glyf");
+impl_tag!(Glyf, "glyf");
 
 pub enum GlyfGlyphDescription {
     Format1(SimpleGlyph),

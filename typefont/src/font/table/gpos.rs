@@ -1,7 +1,7 @@
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct GPOS {
     // TODO
 }
 
-impl_named!(GPOS, "GPOS");
+impl_tag!(GPOS, "GPOS");

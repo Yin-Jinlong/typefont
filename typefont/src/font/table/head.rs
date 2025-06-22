@@ -1,6 +1,6 @@
 use super::super::Fixed;
 use super::super::LongDataTime;
-use crate::impl_named;
+use crate::impl_tag;
 
 /// 此表提供了有关字体的全局信息。
 /// 边界框值应仅使用具有轮廓的字形进行计算。
@@ -122,4 +122,4 @@ pub mod font_direction_hint {
     const R2L_NEUTRALS: i16 = -2;
 }
 
-impl_named!(Head, "head");
+impl_tag!(Head, "head");

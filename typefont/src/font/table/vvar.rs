@@ -1,5 +1,5 @@
 use crate::font::Offset32;
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct VVAR {
     /// 1
@@ -13,4 +13,4 @@ pub struct VVAR {
     v_org_mapping_offset: Offset32,
 }
 
-impl_named!(VVAR, "VVAR");
+impl_tag!(VVAR, "VVAR");

@@ -1,5 +1,5 @@
 use crate::font::{Offset32, Tag};
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct Sbix {
     header: SbixHeader,
@@ -13,7 +13,7 @@ pub struct SbixHeader {
     strike_offsets: Vec<Offset32>,
 }
 
-impl_named!(Sbix, "sbix");
+impl_tag!(Sbix, "sbix");
 
 pub struct StrikeHeader {
     ppem: u16,

@@ -1,11 +1,11 @@
 use super::bm::BitmapSize;
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct CBLC {
     header: CblcHeader,
 }
 
-impl_named!(CBLC, "CBLC");
+impl_tag!(CBLC, "CBLC");
 
 pub struct CblcHeader {
     major_version: u16,

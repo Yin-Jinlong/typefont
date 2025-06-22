@@ -1,7 +1,7 @@
 use super::bm::BitmapSize;
 use super::glyph::BigGlyphMetrics;
 use crate::font::{Offset16, Offset32};
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct Eblc {
     /// 2
@@ -12,7 +12,7 @@ pub struct Eblc {
     bitmap_sizes: Vec<BitmapSize>,
 }
 
-impl_named!(Eblc, "EBLC");
+impl_tag!(Eblc, "EBLC");
 
 pub struct SbitLineMetrics {
     ascender: i8,

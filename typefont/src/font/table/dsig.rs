@@ -1,5 +1,5 @@
 use crate::font::Offset32;
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct DSIG {
     version: u32,
@@ -8,7 +8,7 @@ pub struct DSIG {
     signature_records: Vec<SignatureRecord>,
 }
 
-impl_named!(DSIG, "DSIG");
+impl_tag!(DSIG, "DSIG");
 
 pub struct SignatureRecord {
     format: u32,

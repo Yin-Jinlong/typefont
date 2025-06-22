@@ -1,5 +1,5 @@
 use crate::font::{Offset32, Tag};
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct Meta {}
 
@@ -11,7 +11,7 @@ pub struct MetaHeader {
     data_maps: Vec<DataMap>,
 }
 
-impl_named!(Meta, "meta");
+impl_tag!(Meta, "meta");
 
 pub struct DataMap {
     tag: Tag,

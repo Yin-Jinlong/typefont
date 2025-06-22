@@ -1,7 +1,7 @@
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct Vmtx {
     // TODO
 }
 
-impl_named!(Vmtx, "vmtx");
+impl_tag!(Vmtx, "vmtx");

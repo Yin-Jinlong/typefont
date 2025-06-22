@@ -1,5 +1,5 @@
 use crate::font::Offset32;
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct SVG {
     header: SVGHeader,
@@ -14,7 +14,7 @@ pub struct SVGHeader {
     reserved: u32,
 }
 
-impl_named!(SVG, "SVG");
+impl_tag!(SVG, "SVG");
 
 pub struct SVGDocumentList {
     num_entries: u16,

@@ -1,4 +1,4 @@
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct CBDT {
     header: CbdtHeader,
@@ -10,7 +10,7 @@ pub struct CBDT {
     bmp_data: Vec<u8>,
 }
 
-impl_named!(CBDT, "CBDT");
+impl_tag!(CBDT, "CBDT");
 
 pub struct CbdtHeader {
     /// 3

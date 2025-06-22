@@ -1,5 +1,5 @@
 use crate::font::{Fixed, Offset16, Tag};
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct Fvar {
     header: FvarHeader,
@@ -21,7 +21,7 @@ pub struct FvarHeader {
     instance_size: u16,
 }
 
-impl_named!(Fvar, "fvar");
+impl_tag!(Fvar, "fvar");
 
 pub struct VariationAxisRecord {
     axis_tag: Tag,

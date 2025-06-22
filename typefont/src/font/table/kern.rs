@@ -1,5 +1,5 @@
 use crate::font::{FWord, Offset16};
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct Kern {
     header: KernHeader,
@@ -20,7 +20,7 @@ pub struct KernSubtableHeader {
     coverage: u16,
 }
 
-impl_named!(Kern, "kern");
+impl_tag!(Kern, "kern");
 
 pub enum KernSubtable {
     Format0(KernSubtableFormat0),

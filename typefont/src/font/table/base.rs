@@ -1,5 +1,5 @@
 use crate::font::{Offset16, Offset32, Tag};
-use crate::impl_named;
+use crate::impl_tag;
 
 pub struct BASE {
     header: BaseHeader,
@@ -30,7 +30,7 @@ pub struct BaseHeader1_1 {
     item_var_store_offset: Offset32,
 }
 
-impl_named!(BASE, "BASE");
+impl_tag!(BASE, "BASE");
 
 pub struct AxisTable {
     base_tag_list_offset: Offset16,

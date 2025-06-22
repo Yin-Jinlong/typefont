@@ -1,4 +1,4 @@
-use crate::impl_named;
+use crate::impl_tag;
 use crate::types::F2D14;
 
 pub struct Avar {
@@ -19,4 +19,4 @@ pub struct AxisValueMap {
     to_coordinate: F2D14,
 }
 
-impl_named!(Avar, "avar");
+impl_tag!(Avar, "avar");

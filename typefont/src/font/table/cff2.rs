@@ -1,10 +1,10 @@
-use crate::impl_named;
+use crate::impl_tag;
 
 // TODO
 
 pub struct CFF2 {}
 
-impl_named!(CFF2, "CFF2");
+impl_tag!(CFF2, "CFF2");
 
 pub struct CFF2Header {
     /// 2
