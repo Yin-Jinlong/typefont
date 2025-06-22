@@ -156,14 +156,19 @@ impl ReadFrom<ReaderBoxed> for TableDirectory {
         let search_range = reader.read_u16()?;
         let entry_selector = reader.read_u16()?;
         let range_shift = reader.read_u16()?;
-        // TODO
+        let mut table_records: Vec<TableRecord> = vec![];
+
+        for _ in 0..num_tables {
+            table_records.push(TableRecord::read_from(reader)?);
+        }
+
         Ok(Self {
             sfnt_version: sfnt,
             num_tables,
             search_range,
             entry_selector,
             range_shift,
-            table_records: vec![],
+            table_records,
         })
     }
 }
