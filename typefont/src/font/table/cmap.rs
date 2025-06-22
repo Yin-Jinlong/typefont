@@ -1,5 +1,8 @@
 use crate::font::Offset32;
+use crate::font::io::ReadFrom;
 use crate::impl_tag;
+use crate::io::error::IOError;
+use crate::io::reader::ReaderBoxed;
 use bit_struct::u24;
 
 /// # cmap — 字符到字形索引映射表
@@ -39,9 +42,45 @@ pub struct Cmap {
     version: u16,
     num_tables: u16,
     encoding_records: Vec<EncodingRecord>,
+    sub_tables: Vec<CmapSubTable>,
 }
 
 impl_tag!(Cmap, "cmap");
+
+impl ReadFrom<ReaderBoxed> for Cmap {
+    fn read_from(reader: &mut ReaderBoxed) -> Result<Self, IOError> {
+        let version = reader.read_u16()?;
+        if version != 0 {
+            return Err(IOError::BadFormat(format!(
+                "Only version 0 is supported. Got: {}",
+                version
+            )));
+        }
+        let num_tables = reader.read_u16()?;
+        let mut encoding_records = Vec::with_capacity(num_tables as usize);
+        let mut sub_tables: Vec<CmapSubTable> = Vec::with_capacity(num_tables as usize);
+        for _ in 0..num_tables {
+            let record = EncodingRecord::read_from(reader)?;
+            let pos = reader.position();
+            reader.seek(record.subtable_offset as usize)?;
+            encoding_records.push(record);
+            match CmapSubTable::read_from(reader) {
+                Ok(sub) => {
+                    sub_tables.push(sub);
+                }
+                Err(e) => {}
+            }
+            reader.seek(pos)?;
+        }
+
+        Ok(Self {
+            version,
+            num_tables,
+            encoding_records,
+            sub_tables,
+        })
+    }
+}
 
 ///
 /// 编码记录中的平台ID和平台特定的编码ID用于指定特定的字符编码。
@@ -73,7 +112,16 @@ pub struct EncodingRecord {
     encoding_id: u16,
     /// 此编码从表开头到子表的字节偏移量。
     subtable_offset: Offset32,
-    sub_tables: Vec<CmapSubTable>,
+}
+
+impl ReadFrom<ReaderBoxed> for EncodingRecord {
+    fn read_from(reader: &mut ReaderBoxed) -> Result<Self, IOError> {
+        Ok(Self {
+            platform_id: reader.read_u16()?,
+            encoding_id: reader.read_u16()?,
+            subtable_offset: reader.read_u32()?,
+        })
+    }
 }
 
 ///
@@ -181,6 +229,31 @@ pub enum CmapSubTable {
     Format14(UnicodeVariationSequences),
 }
 
+impl ReadFrom<ReaderBoxed> for CmapSubTable {
+    fn read_from(reader: &mut ReaderBoxed) -> Result<Self, IOError> {
+        reader.mark()?;
+        let format = reader.read_u16()?;
+        let length = reader.read_u16()?;
+        reader.reset()?;
+
+        let mut sub = reader.read_sub(length as usize)?;
+
+        match format {
+            0 => Ok(Self::Format0(ByteEncodingTable::read_from(&mut sub)?)),
+            2 => Ok(Self::Format2(HighByteMappingThrough::read_from(&mut sub)?)),
+
+            4 => Ok(Self::Format4(SegmentMappingToDeltaValues::read_from(
+                &mut sub,
+            )?)),
+
+            _ => Err(IOError::BadFormat(format!(
+                "Unknown cmap subtable format: {}",
+                format
+            ))),
+        }
+    }
+}
+
 ///
 /// # 格式 0
 ///
@@ -198,6 +271,25 @@ pub struct ByteEncodingTable {
     length: u16,
     language: u16,
     glyph_id_array: [u8; 256],
+}
+
+impl ReadFrom<ReaderBoxed> for ByteEncodingTable {
+    fn read_from(reader: &mut ReaderBoxed) -> Result<Self, IOError> {
+        let format = reader.read_u16()?;
+        if format != 0 {
+            return Err(IOError::BadFormat(format!(
+                "Cmap Subtable format must be 0, but got {}",
+                format
+            )));
+        }
+        Ok(Self {
+            format: 0,
+            length: reader.read_u16()?,
+            language: reader.read_u16()?,
+            glyph_id_array: <[u8; 256]>::try_from(reader.read_bytes_expected(256)?.as_slice())
+                .unwrap(),
+        })
+    }
 }
 
 ///
@@ -226,34 +318,72 @@ pub struct HighByteMappingThrough {
     language: u16,
     /// 将高字节映射到 `sub_headers` 数组的数组：值为 `sub_headers` 索引 × 8。
     sub_header_keys: [u16; 256],
+    /// 可变长度
     sub_headers: Vec<HighByteMappingThroughTableSubHeader>,
-    /// entry_count
-    glyph_id_array: [u16; 256],
+    /// 用于映射 2 字节字符低字节的可变长度数组包含子数组
+    glyph_id_array: Vec<u16>,
+}
+
+impl ReadFrom<ReaderBoxed> for HighByteMappingThrough {
+    fn read_from(reader: &mut ReaderBoxed) -> Result<Self, IOError> {
+        let format = reader.read_u16()?;
+        if format != 2 {
+            return Err(IOError::UnableOperate(format!(
+                "HighByteMappingThrough: format must be 2, but got {}",
+                format
+            )));
+        }
+        let length = reader.read_u16()?;
+        let language = reader.read_u16()?;
+        let sub_header_keys = <[u16; 256]>::try_from(reader.read_u16_list(256)?.as_slice());
+
+        let mut sub_headers: Vec<HighByteMappingThroughTableSubHeader> = vec![];
+        // TODO
+        Ok(Self {
+            format,
+            length,
+            language,
+            sub_header_keys: sub_header_keys.unwrap(),
+            sub_headers,
+            glyph_id_array: vec![],
+        })
+    }
 }
 
 ///
 /// `first_code` 和 `entry_count` 值指定一个子范围，
 /// 该子范围从 `first_code` 开始，长度等于 `entry_count` 的值。
-/// 此子范围保持在所映射字节的 `0-255` 范围内。
-/// 此子范围之外的字节将映射到字形索引 0 （缺少字形） 。
-/// 然后，此子范围中字节的偏移量将用作 `glyph_id_array` 的相应子数组的索引。
-/// 此子数组的长度也是 `entry_count`。`id_range_offset` 的值
-/// 是超出 `id_range_offset` 单词实际位置的字节数，
-/// 其中显示了与 `first_code` 对应的 `glyph_id_array` 元素。
+/// 该子范围始终在被映射字节的 0-255 范围内。
+/// 超出该子范围的字节被映射到字形索引 0（缺失字形）。
+/// 该字节在子范围内的偏移量随后被用作对应字形 `id` 数组的子数组的索引。
+/// 该子数组的长度也等于 `entry_count`。
+/// `id_range_offset` 的值是`glyph_id_array`中对应 `first_code` 的元素实际位置之后，
+/// 经过 `id_range_offset` 字的字节数。
 ///
-/// 最后，如果从子数组获得的值不是 `0`（这表示缺少字形），
-/// 则应向其添加 `idDelta` 以获取 `glyph_index`。
-/// 值 `id_delta` 允许将同一子数组用于多个不同的子标题。
-/// `id_delta` 算法是模 `65536`。如果将 `id_delta` 添加到子数组的值后，
-/// 结果小于零，则添加 `65536` 以获取有效的字形 `ID`。
-///
+/// 最后，如果从子数组中获得的值不是_0（表示缺失的字形），
+/// 应将其与 `id_delta` 相加以获得 `glyph_index`。
+/// `id_delta` 的值允许同一个子数组用于多个不同的子标题。
+/// `id_delta` 的运算采用模 `65536` 的方式。
+/// 如果将 `id_delta` 加到子数组中的值后结果小于零，
+/// 则需加上 `65536` 以获得有效的字形 ID。
 pub struct HighByteMappingThroughTableSubHeader {
     /// 此 SubHeader 的第一个有效低字节。
     first_code: u16,
     /// 此 SubHeader 的有效低字节数。
     entry_count: u16,
-    id_delta: u16,
+    id_delta: i16,
     id_range_offset: u16,
+}
+
+impl ReadFrom<ReaderBoxed> for HighByteMappingThroughTableSubHeader {
+    fn read_from(reader: &mut ReaderBoxed) -> Result<Self, IOError> {
+        Ok(Self {
+            first_code: reader.read_u16()?,
+            entry_count: reader.read_u16()?,
+            id_delta: reader.read_i16()?,
+            id_range_offset: reader.read_u16()?,
+        })
+    }
 }
 
 /// # 格式 4
@@ -400,8 +530,39 @@ pub struct SegmentMappingToDeltaValues {
     ///
     /// 句段中所有字符代码的 Delta。
     id_range_offset: Vec<u16>,
-    /// entry_count
+    ///
     glyph_id_array: Vec<u16>,
+}
+
+impl ReadFrom<ReaderBoxed> for SegmentMappingToDeltaValues {
+    fn read_from(reader: &mut ReaderBoxed) -> Result<Self, IOError> {
+        let format = reader.read_u16()?;
+        if format != 4 {
+            return Err(IOError::BadFormat(format!(
+                "Cmap format must be 4, but got {}",
+                format
+            )));
+        }
+        let length = reader.read_u16()?;
+        let language = reader.read_u16()?;
+        let seg_count_x2 = reader.read_u16()?;
+        let seg_count = (seg_count_x2 / 2) as usize;
+        Ok(Self {
+            format: 4,
+            length,
+            language,
+            seg_count_x2,
+            search_range: reader.read_u16()?,
+            entry_selector: reader.read_u16()?,
+            range_shift: reader.read_u16()?,
+            end_code: reader.read_u16_list(seg_count)?,
+            reserved_pad: 0,
+            start_code: reader.read_u16_list(seg_count)?,
+            id_delta: reader.read_u16_list(seg_count)?,
+            id_range_offset: reader.read_u16_list(seg_count)?,
+            glyph_id_array: reader.read_u16_list(seg_count)?,
+        })
+    }
 }
 
 /// # 格式 6

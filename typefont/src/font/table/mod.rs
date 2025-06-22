@@ -119,6 +119,7 @@ impl Table {
     ) -> Result<Self, crate::io::error::IOError> {
         match tag.to_u32() {
             base::BASE::TAG_U32 => Ok(Table::BASE(base::BASE::read_from(reader)?)),
+            cmap::Cmap::TAG_U32 => Ok(Table::Cmap(cmap::Cmap::read_from(reader)?)),
 
             _ => Err(crate::io::error::IOError::UnableOperate(format!(
                 "Unknown or unsupported table tag: {}",
